@@ -1,8 +1,7 @@
-use std::hash::Hash;
 use std::{fmt::Debug, future::Future, pin::Pin};
 
 pub trait Discover {
-    type Key: Hash + Eq;
+    type Key;
 }
 
 pub trait Service<Request> {
@@ -24,8 +23,8 @@ where
 
 impl<D> Service<Request> for PeerSet<D>
 where
-    D: Discover + Unpin,
-    D::Key: Clone + Debug + ToString,
+    D: Discover,
+    D::Key: Debug,
 {
     type Error = Error;
     type Future = Pin<Box<dyn Future<Output = Result<Response, Self::Error>> + Send + 'static>>;
