@@ -5,7 +5,14 @@ use std::{
     pin::Pin,
     task::{Context, Poll},
 };
-use tower_load::Load;
+
+pub trait Load {
+    /// A comparable load metric. Lesser values are "preferable" to greater values.
+    type Metric: PartialOrd;
+
+    /// Obtains a service's load.
+    fn load(&self) -> Self::Metric;
+}
 
 /// A change in the service set
 #[derive(Debug)]
