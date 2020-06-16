@@ -1,16 +1,6 @@
+use crate::Error;
 use std::{fmt::Debug, future::Future, pin::Pin};
 
-pub trait Discover {
-    type Key;
-}
-
-pub trait Service<Request> {
-    type Error;
-    type Future: Future<Output = Result<Response, Self::Error>>;
-    fn call(&mut self, req: Request) -> Self::Future;
-}
-
-use crate::Error;
 pub struct Request;
 pub struct Response;
 
@@ -32,4 +22,14 @@ where
     fn call(&mut self, _req: Request) -> Self::Future {
         todo!()
     }
+}
+
+pub trait Discover {
+    type Key;
+}
+
+pub trait Service<Request> {
+    type Error;
+    type Future: Future<Output = Result<Response, Self::Error>>;
+    fn call(&mut self, req: Request) -> Self::Future;
 }

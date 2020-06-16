@@ -40,4 +40,6 @@
 /// parameterized by 'a), *not* that the object itself has 'static lifetime.
 pub type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
 
-mod peer_set;
+mod peer_set {
+    mod set;
+}
