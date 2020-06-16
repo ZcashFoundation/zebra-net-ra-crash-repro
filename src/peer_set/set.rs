@@ -6,13 +6,13 @@ use std::{
     task::{Context, Poll},
 };
 
-pub trait Load {
-    /// A comparable load metric. Lesser values are "preferable" to greater values.
-    type Metric: PartialOrd;
+// pub trait Load {
+//     /// A comparable load metric. Lesser values are "preferable" to greater values.
+//     type Metric: PartialOrd;
 
-    /// Obtains a service's load.
-    fn load(&self) -> Self::Metric;
-}
+//     /// Obtains a service's load.
+//     fn load(&self) -> Self::Metric;
+// }
 
 /// A change in the service set
 #[derive(Debug)]
@@ -96,11 +96,10 @@ impl<D> Service<Request> for PeerSet<D>
 where
     D: Discover + Unpin,
     D::Key: Clone + Debug + ToString,
-    D::Service: Service<Request, Response = Response> + Load,
+    D::Service: Service<Request, Response = Response>,
     D::Error: Into<BoxedStdError>,
     <D::Service as Service<Request>>::Error: Into<BoxedStdError> + 'static,
     <D::Service as Service<Request>>::Future: Send + 'static,
-    <D::Service as Load>::Metric: Debug,
 {
     type Response = Response;
     type Error = BoxedStdError;

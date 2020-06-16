@@ -30,6 +30,6 @@ proptest = "0.10"
 # tracing = "0.1"
 # tracing-futures = "0.2"
 
-tower-load = "0.3"
+# tower-load = "0.3"
 
 # metrics = "0.12"
